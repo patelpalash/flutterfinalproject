@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sem5finalproject/model/user.dart';
 import 'package:sem5finalproject/screens/calendarscreen.dart';
 import 'package:sem5finalproject/screens/profileScreen.dart';
 import 'package:sem5finalproject/screens/todayScreen.dart';
@@ -17,12 +19,32 @@ class _HomeScreenState extends State<HomeScreen> {
   double screenWidth = 0;
   Color primary = Colors.red;
   int currentIndex = 1;
+  String id = "";
 
   List<IconData> navigationIcons = [
     FontAwesomeIcons.calendarDay,
     FontAwesomeIcons.check,
     FontAwesomeIcons.user,
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getId();
+  }
+
+  void getId() async {
+    QuerySnapshot snap = await FirebaseFirestore.instance
+        .collection("Employee")
+        .where('id', isEqualTo: User1.employeeId)
+        .get();
+
+    setState(() {
+      User1.id = snap.docs[0].id;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -31,10 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: IndexedStack(
         index: currentIndex,
-        children: const [
-          CalendarScreen(),
-          TodayScreen(),
-          ProfileScreen(),
+        children: [
+          new CalendarScreen(),
+          new TodayScreen(),
+          new ProfileScreen(),
         ],
       ),
       bottomNavigationBar: Container(

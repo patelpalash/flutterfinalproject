@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:mx_month_picker/mx_month_picker.dart';
 import 'package:sem5finalproject/screens/Home_Screen.dart';
 import 'package:sem5finalproject/screens/loginscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Employee management',
       home: KeyboardVisibilityProvider(child: AuthCheck()),
+      localizationsDelegates: const [
+        MonthYearPickerLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
     );
@@ -69,5 +73,6 @@ class _AuthCheckState extends State<AuthCheck> {
   @override
   Widget build(BuildContext context) {
     return userAvailable ? const HomeScreen() : const LoginScreen();
+    // return HomeScreen();
   }
 }

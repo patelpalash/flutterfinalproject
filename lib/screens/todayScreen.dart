@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 import '../model/user.dart';
-import 'package:mx_month_picker/mx_month_picker.dart';
 
 class TodayScreen extends StatefulWidget {
   const TodayScreen({super.key});
@@ -218,10 +217,6 @@ class _TodayScreenState extends State<TodayScreen> {
                           innerColor: Colors.red,
                           key: key,
                           onSubmit: () async {
-                            Timer(Duration(seconds: 1), () {
-                              key.currentState!.reset();
-                            });
-
                             QuerySnapshot snap = await FirebaseFirestore
                                 .instance
                                 .collection("Employee")
@@ -254,6 +249,7 @@ class _TodayScreenState extends State<TodayScreen> {
                                         .format(DateTime.now()),
                                   )
                                   .update({
+                                'date': Timestamp.now(),
                                 'checkIn': checkIn,
                                 'checkOut': checkOut,
                                 // DateFormat('hh:mm').format(DateTime.now()),
@@ -272,10 +268,13 @@ class _TodayScreenState extends State<TodayScreen> {
                                         .format(DateTime.now()),
                                   )
                                   .set({
+                                'date': Timestamp.now(),
                                 'checkIn':
                                     DateFormat('hh:mm').format(DateTime.now()),
+                                'checkOut': "--/--",
                               });
                             }
+                            key.currentState!.reset();
                           },
                         );
                       },

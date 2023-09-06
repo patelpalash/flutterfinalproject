@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 fieldTitle("Employee Id"),
                 customField("Enter your employee id", idController, false),
                 fieldTitle(" Password"),
-                customField("Enter your Password", passController, true),
+                customField("Enter your Password", passController, false),
                 GestureDetector(
                   onTap: () async {
                     FocusScope.of(context).unfocus();
