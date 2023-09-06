@@ -49,6 +49,8 @@ dependencies:
   intl: ^0.18.0
   slide_to_act: ^2.0.1
   mx_month_picker: ^0.3.0+2
+  geocoding: ^2.1.0
+  location: ^5.0.3
  
 
 dev_dependencies:

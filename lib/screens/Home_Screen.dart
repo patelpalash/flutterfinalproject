@@ -6,6 +6,7 @@ import 'package:sem5finalproject/model/user.dart';
 import 'package:sem5finalproject/screens/calendarscreen.dart';
 import 'package:sem5finalproject/screens/profileScreen.dart';
 import 'package:sem5finalproject/screens/todayScreen.dart';
+import 'package:sem5finalproject/services/location_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,7 +32,22 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _startLocationService();
     getId();
+  }
+
+  void _startLocationService() async {
+    LocationService().initialize();
+    LocationService().getLongitude().then((value) {
+      setState(() {
+        User1.long = value!;
+      });
+      LocationService().getLatitude().then((value) {
+        setState(() {
+          User1.lat = value!;
+        });
+      });
+    });
   }
 
   void getId() async {
