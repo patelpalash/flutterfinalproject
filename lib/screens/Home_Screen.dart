@@ -30,10 +30,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _startLocationService();
-    getId();
+    getId().then((value) {
+      _getCredentials();
+      _getProfilePic();
+    });
+  }
+
+  void _getProfilePic() async {
+    DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection("Employee")
+        .doc(User1.id)
+        .get();
+    setState(() {
+      User1.profilePicLink = doc['profilePic'];
+    });
+  }
+
+  void _getCredentials() async {
+    try {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection("Employee")
+          .doc(User1.id)
+          .get();
+      setState(() {
+        User1.canEdit = doc['canEdit'];
+        User1.firstName = doc['firstName'];
+        User1.lastName = doc['lastName'];
+        User1.birthDate = doc['birthDate'];
+        User1.address = doc['address'];
+      });
+    } catch (e) {
+      return;
+    }
   }
 
   void _startLocationService() async {
@@ -50,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void getId() async {
+  Future<void> getId() async {
     QuerySnapshot snap = await FirebaseFirestore.instance
         .collection("Employee")
         .where('id', isEqualTo: User1.employeeId)
