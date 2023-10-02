@@ -36,7 +36,7 @@ class _TodayScreenState extends State<TodayScreen> {
         await placemarkFromCoordinates(User1.lat, User1.long);
     setState(() {
       location =
-          "${placemark[0].street},${placemark[0].administrativeArea},${placemark[0].postalCode},${placemark[0].country}";
+          "${placemark[0].name.toString()},${placemark[0].administrativeArea},${placemark[0].postalCode},${placemark[0].country}";
     });
   }
 

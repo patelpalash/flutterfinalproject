@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
+import 'package:sem5finalproject/main.dart';
 import 'package:sem5finalproject/model/user.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -102,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             User1.canEdit
                 ? textField("First Name", "First name", firstNameController)
-                : field("First Name", User1.firstName),
+                : field("Last Name", User1.firstName),
             User1.canEdit
                 ? textField("Last Name", "Last name", lastNameController)
                 : field("Last Name", User1.lastName),
@@ -179,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             'lastName': lastName,
                             'birthDate': birthDate,
                             'address': address,
-                            'canEdit': false,
+                            'canEdit': true,
                           }).then((value) {
                             setState(() {
                               User1.canEdit = false;
@@ -203,19 +204,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(4),
                         color: primary,
                       ),
-                      child: const Center(
-                        child: Text(
-                          "SAVE",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "NexaBold",
-                            fontSize: 16,
+                      child: GestureDetector(
+                        onTap: () {
+                          Text("Button is pressed");
+                        },
+                        child: const Center(
+                          child: Text(
+                            "SAVE",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "NexaBold",
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   )
-                : const SizedBox(),
+                : Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Rebuild the whole application
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyApp()),
+                            (route) => false,
+                          );
+                        },
+                        child: Text('if you want to update click here '),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          onPrimary: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Admin will know your update actions",
+                        style: TextStyle(color: Colors.red),
+                        textAlign: TextAlign.left,
+                      )
+                    ],
+                  ),
+            // : const Text(
+            //     "If you want to Re-Edit information contact your admin"),
           ],
         ),
       ),
